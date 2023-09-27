@@ -12,7 +12,8 @@ dependencies:
   get: ^4.6.5
   awesome_notifications: 0.7.4+1
   bottom_sheet_helper:
-    git: https://github.com/niypoo/bottom_sheet_helper.git
+    git: 
+      url: git@github.com:niypoo/bottom_sheet_helper.git
 
 dev_dependencies:
   flutter_test:
