@@ -15,7 +15,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: aef4dbcf3efc234d29b09c773fa122f7dde5416b
-      url: "https://github.com/niypoo/app_configuration_service.git"
+      url: " git@github.com:niypoo/app_configuration_service.git"
     source: git
     version: "1.0.0+1"
   args:
@@ -64,7 +64,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: "078d447fc3c751389c26b22ec7a3ee45049baa81"
-      url: "https://github.com/niypoo/bottom_sheet_helper.git"
+      url: " git@github.com:niypoo/bottom_sheet_helper.git"
     source: git
     version: "1.0.0+1"
   cached_network_image:
@@ -216,7 +216,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: "9e81f96c02261e72bd03e4ea49afa26859cca847"
-      url: "https://github.com/niypoo/fly_ui.git"
+      url: " git@github.com:niypoo/fly_ui.git"
     source: git
     version: "1.0.0+1"
   get:
