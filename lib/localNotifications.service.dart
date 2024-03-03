@@ -10,8 +10,6 @@ class LocalNotificationsService extends GetxService {
   // defined
   static LocalNotificationsService get to => Get.find();
 
-  // handler
-  static late LocalNotificationServiceHandler _handler;
   // channel key
   static late String _channelKey;
 
@@ -30,8 +28,6 @@ class LocalNotificationsService extends GetxService {
     NotificationImportance importance = NotificationImportance.High,
     NotificationPrivacy defaultPrivacy = NotificationPrivacy.Private,
   }) async {
-    // assignment
-    _handler = handler;
     _channelKey = channelKey;
 
     // initialize
@@ -59,8 +55,10 @@ class LocalNotificationsService extends GetxService {
     ///     NOTIFICATION EVENTS LISTENER
     ///  *********************************************
     ///  Notifications events are only delivered after call this method
-    AwesomeNotifications()
-        .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: (ReceivedAction receivedAction) =>
+          onActionReceivedMethod(receivedAction, handler),
+    );
 
     return this;
   }
@@ -70,19 +68,15 @@ class LocalNotificationsService extends GetxService {
   ///  *********************************************
   ///
   @pragma('vm:entry-point')
-  static Future<void> onActionReceivedMethod(
-    ReceivedAction? receivedAction,
-  ) async {
-    // skip
-    if (receivedAction == null) return;
-
+  static Future<void> onActionReceivedMethod(ReceivedAction receivedAction,
+      LocalNotificationServiceHandler handler) async {
     if (receivedAction.actionType == ActionType.SilentAction ||
         receivedAction.actionType == ActionType.SilentBackgroundAction) {
       // Trigger silent action
-      _handler.onBackgroundAction(receivedAction);
+      handler.onBackgroundAction(receivedAction);
     } else {
       // Trigger  action
-      _handler.onForegroundAction(receivedAction);
+      handler.onForegroundAction(receivedAction);
     }
   }
 
