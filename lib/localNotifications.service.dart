@@ -4,7 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bottom_sheet_helper/services/conformationSheet.helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:local_notifications_service/abstracts/handler.abstract.dart';
+// import 'package:local_notifications_service/abstracts/handler.abstract.dart';
 
 class LocalNotificationsService extends GetxService {
   // defined
@@ -18,7 +18,8 @@ class LocalNotificationsService extends GetxService {
     required String channelKey,
     required channelName,
     required channelDescription,
-    required LocalNotificationServiceHandler handler,
+    required void Function(ReceivedAction) onBackgroundAction,
+    required void Function(ReceivedAction) onForegroundAction,
     String notificationIcon = 'resource://mipmap/notification_icon',
     String soundSource = 'resource://raw/notification_sound',
     Color? notificationColor,
@@ -57,7 +58,11 @@ class LocalNotificationsService extends GetxService {
     ///  Notifications events are only delivered after call this method
     AwesomeNotifications().setListeners(
       onActionReceivedMethod: (ReceivedAction receivedAction) =>
-          onActionReceivedMethod(receivedAction, handler),
+          onActionReceivedMethod(
+        receivedAction: receivedAction,
+        onBackgroundAction: onBackgroundAction,
+        onForegroundAction: onForegroundAction,
+      ),
     );
 
     return this;
@@ -68,15 +73,18 @@ class LocalNotificationsService extends GetxService {
   ///  *********************************************
   ///
   @pragma('vm:entry-point')
-  static Future<void> onActionReceivedMethod(ReceivedAction receivedAction,
-      LocalNotificationServiceHandler handler) async {
+  static Future<void> onActionReceivedMethod({
+    required ReceivedAction receivedAction,
+    required void Function(ReceivedAction) onBackgroundAction,
+    required void Function(ReceivedAction) onForegroundAction,
+  }) async {
     if (receivedAction.actionType == ActionType.SilentAction ||
         receivedAction.actionType == ActionType.SilentBackgroundAction) {
       // Trigger silent action
-      handler.onBackgroundAction(receivedAction);
+      onBackgroundAction(receivedAction);
     } else {
       // Trigger  action
-      handler.onForegroundAction(receivedAction);
+      onForegroundAction(receivedAction);
     }
   }
 
