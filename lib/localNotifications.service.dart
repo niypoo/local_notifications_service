@@ -18,8 +18,7 @@ class LocalNotificationsService extends GetxService {
     required String channelKey,
     required channelName,
     required channelDescription,
-    required void Function(ReceivedAction) onBackgroundAction,
-    required void Function(ReceivedAction) onForegroundAction,
+    required Future<void> Function(ReceivedAction) onActionReceivedMethod,
     String notificationIcon = 'resource://mipmap/notification_icon',
     String soundSource = 'resource://raw/notification_sound',
     Color? notificationColor,
@@ -57,36 +56,31 @@ class LocalNotificationsService extends GetxService {
     ///  *********************************************
     ///  Notifications events are only delivered after call this method
     AwesomeNotifications().setListeners(
-      onActionReceivedMethod: (ReceivedAction receivedAction) =>
-          onActionReceivedMethod(
-        receivedAction: receivedAction,
-        onBackgroundAction: onBackgroundAction,
-        onForegroundAction: onForegroundAction,
-      ),
+      onActionReceivedMethod: onActionReceivedMethod
     );
 
     return this;
   }
 
-  ///  *********************************************
-  ///     NOTIFICATION EVENTS
-  ///  *********************************************
-  ///
-  @pragma('vm:entry-point')
-  static Future<void> onActionReceivedMethod({
-    required ReceivedAction receivedAction,
-    required void Function(ReceivedAction) onBackgroundAction,
-    required void Function(ReceivedAction) onForegroundAction,
-  }) async {
-    if (receivedAction.actionType == ActionType.SilentAction ||
-        receivedAction.actionType == ActionType.SilentBackgroundAction) {
-      // Trigger silent action
-      onBackgroundAction(receivedAction);
-    } else {
-      // Trigger  action
-      onForegroundAction(receivedAction);
-    }
-  }
+  // ///  *********************************************
+  // ///     NOTIFICATION EVENTS
+  // ///  *********************************************
+  // ///
+  // @pragma('vm:entry-point')
+  // static Future<void> onActionReceivedMethod({
+  //   required ReceivedAction receivedAction,
+  //   required void Function(ReceivedAction) onBackgroundAction,
+  //   required void Function(ReceivedAction) onForegroundAction,
+  // }) async {
+  //   if (receivedAction.actionType == ActionType.SilentAction ||
+  //       receivedAction.actionType == ActionType.SilentBackgroundAction) {
+  //     // Trigger silent action
+  //     onBackgroundAction(receivedAction);
+  //   } else {
+  //     // Trigger  action
+  //     onForegroundAction(receivedAction);
+  //   }
+  // }
 
   // request allowed show notifications
   Future<bool> isNotificationAllowed() async {
