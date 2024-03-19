@@ -10,7 +10,7 @@ dependencies:
     sdk: flutter
 
   get: ^4.6.6
-  awesome_notifications_fcm: ^0.9.3+1
+  awesome_notifications: ^0.9.3+1
   bottom_sheet_helper:
     git: 
       url: git@github.com:niypoo/bottom_sheet_helper.git
