@@ -55,9 +55,8 @@ class LocalNotificationsService extends GetxService {
     ///     NOTIFICATION EVENTS LISTENER
     ///  *********************************************
     ///  Notifications events are only delivered after call this method
-    AwesomeNotifications().setListeners(
-      onActionReceivedMethod: onActionReceivedMethod
-    );
+    AwesomeNotifications()
+        .setListeners(onActionReceivedMethod: onActionReceivedMethod);
 
     return this;
   }
@@ -126,7 +125,7 @@ class LocalNotificationsService extends GetxService {
   }
 
   //show instantly
-  Future<void> show({
+  Future<bool> show({
     required int id,
     required String title,
     required String body,
@@ -138,10 +137,10 @@ class LocalNotificationsService extends GetxService {
     NotificationLayout notificationLayout = NotificationLayout.BigText,
   }) async {
     // skip
-    if (!await isNotificationAllowed()) return;
+    if (!await isNotificationAllowed()) return false;
 
     // trigger notification
-    await AwesomeNotifications().createNotification(
+    return await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,
         channelKey: _channelKey,
@@ -158,7 +157,7 @@ class LocalNotificationsService extends GetxService {
   }
 
   //show Scheduled
-  Future<void> showAsScheduled({
+  Future<bool> showAsScheduled({
     required int id,
     required String title,
     required String body,
@@ -171,10 +170,10 @@ class LocalNotificationsService extends GetxService {
     NotificationLayout notificationLayout = NotificationLayout.Default,
   }) async {
     // skip
-    if (!await isNotificationAllowed()) return;
+    if (!await isNotificationAllowed()) return false;
 
     // trigger notification
-    await AwesomeNotifications().createNotification(
+    return await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,
         channelKey: _channelKey,
@@ -192,7 +191,7 @@ class LocalNotificationsService extends GetxService {
   }
 
   //show Period
-  Future<void> showAsPeriod({
+  Future<bool> showAsPeriod({
     required int id,
     required String title,
     required String body,
@@ -205,10 +204,10 @@ class LocalNotificationsService extends GetxService {
     NotificationLayout notificationLayout = NotificationLayout.Default,
   }) async {
     // skip
-    if (!await isNotificationAllowed()) return;
+    if (!await isNotificationAllowed()) return false;
 
     // trigger notification
-    await AwesomeNotifications().createNotification(
+    return await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,
         channelKey: _channelKey,
